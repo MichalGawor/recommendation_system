@@ -3,7 +3,11 @@ import numpy as np
 
 def produce_data(user='root', database='restaurantwebsite'):
     '''
-    TODO
+    :return: tuple of lists (review, user, restaurant) 
+        review - list 4 long, elements are matrices nb_usrxnb_rest containing reviews from database
+        user - list of tuples of users (user_id, user_nb)
+        restaurant - list of tuples of restaurants (rest_id, rest_nb)
+        user and restaurant list are used for handling empty id slots after deletion of user/restaurant
     '''
     try:
         SQL_connection = mysql.connector.connect(user=user, database=database)

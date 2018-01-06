@@ -1,5 +1,6 @@
 import numpy as np
 from data_extraction import produce_data
+from data_injection import inject_data
 
 from sklearn.metrics.pairwise import pairwise_distances
     
@@ -68,7 +69,12 @@ def sim_matrix(rating_matrices, type='usr'):
     
 def map_id(predictions, users, restaurants):
     '''
-    TODO
+    This function maps restaurant proposition to the user id
+    :param predictions: matrix of predictions n_usrx10
+    :param users: list in format (usr_id, usr_nb)
+    :param restaurants: list in format (rest_id, rest_nb)
+    :return: list of tuples (usr_id, rest_id[]) where rest_id[] is 10 long and 
+    consist of predicted restaurants id for the user
     '''
     ret = []
     for i in range (0, predictions.shape[0]):
@@ -80,10 +86,9 @@ def map_id(predictions, users, restaurants):
         
 if __name__ == "__main__":
     (review_list, users, restaurants) = produce_data()
-    print(review_list)
     pred = predict(review_list, sim_matrix(review_list, type='usr'), sim_matrix(review_list, type='item'))
-    
-    print(map_id(pred.argsort()[:, -10:], users, restaurants))
+    inject_data(map_id(pred.argsort()[:, -10:], users, restaurants))
+    print("Successfully executed")
     
 
 
